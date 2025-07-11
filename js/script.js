@@ -3,8 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const taskInput = document.getElementById("task-input");
   const taskList = document.getElementById("task-list");
 
+  const API_BASE = "http://localhost:3000/api";
+
   const loadTasks = async () => {
-    const res = await fetch("/api/tasks");
+    const res = await fetch(`${API_BASE}/tasks`);
     const tasks = await res.json();
     taskList.innerHTML = "";
     tasks.forEach(task => {
@@ -24,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const addTask = async (title) => {
-    await fetch("/api/tasks", {
+    await fetch(`${API_BASE}/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title }),
@@ -33,12 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const toggleTask = async (id) => {
-    await fetch("/api/tasks/" + id, { method: "PATCH" });
+    await fetch(`${API_BASE}/tasks/${id}`, { method: "PATCH" });
     loadTasks();
   };
 
   const deleteTask = async (id) => {
-    await fetch("/api/tasks/" + id, { method: "DELETE" });
+    await fetch(`${API_BASE}/tasks/${id}`, { method: "DELETE" });
     loadTasks();
   };
 
